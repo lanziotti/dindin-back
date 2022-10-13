@@ -34,6 +34,12 @@ const userRegistration = async (req, res) => {
     }
 }
 
+
+const getUserProfile = async (req, res) => {
+    return res.json(req.user);
+}
+
 module.exports = {
-    userRegistration
+    userRegistration,
+    getUserProfile
 }

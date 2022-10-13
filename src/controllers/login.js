@@ -23,9 +23,7 @@ const login = async (req, res) => {
         return res.status(404).json({ mensagem: "Usuário e/ou senha inválido(s)." });
     }
 
-    const hashJwt = await bcrypt.hash(process.env.HASH_JWT, 10);
-
-    const token = jwt.sign({ id: user.id }, hashJwt, { expiresIn: '8h' });
+    const token = jwt.sign({ id: user.id }, process.env.HASH_JWT, { expiresIn: '8h' });
 
     const {senha: _, ...userData} = user;
 
