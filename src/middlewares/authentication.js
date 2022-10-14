@@ -14,13 +14,13 @@ const authenticationFilter = async (req, res, next) => {
 
         const { id } = jwt.verify(token, process.env.HASH_JWT);
 
-        const user = await knex('usuarios').where({ id });
+        const user = await knex('usuarios').where({ id }).first();
 
-        if (!user[0]) {
+        if (!user) {
             return res.status(401).json({ mensagem: "Não autorizado." });
         }
 
-        const { senha: _, ...userData } = user[0];
+        const { senha: _, ...userData } = user;
 
         req.user = userData;
 
