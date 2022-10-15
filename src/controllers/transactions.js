@@ -56,7 +56,6 @@ const listTransactions = async (req, res) => {
         return res.json(transactions);
 
     } catch (error) {
-        console.log(error)
         return res.status(500).json({ mensagem: "Erro interno do servidor." });
     }
 }
@@ -148,7 +147,7 @@ const deleteTransaction = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const transaction = await knex('transacoes').where({usuario_id: user.id, id }).first();
+        const transaction = await knex('transacoes').where({ usuario_id: user.id, id }).first();
 
         if (!transaction) {
             return res.status(404).json({ mensagem: "A transação não existe." });
@@ -157,20 +156,40 @@ const deleteTransaction = async (req, res) => {
         const transactionDeleted = await knex('transacoes').where({ id }).del();
 
         if (!transactionDeleted) {
-            return res.status(400).json({mensagem: "A transação não foi excuída."})
+            return res.status(400).json({ mensagem: "A transação não foi excuída." })
         }
 
         return res.status(204).send();
-        
+
     } catch (error) {
         return res.status(500).json({ mensagem: "Erro interno do servidor." });
     }
 }
+
+
+const consultExtract = async (req, res) => {
+    const { user } = req;
+
+    try {
+        const entry = await knex('transacoes').where({usuario_id: user.id, tipo: 'entrada'}).sum('valor').first();
+        const exit = await knex('transacoes').where({usuario_id: user.id, tipo: 'saida'}).sum('valor').first();
+
+        return res.json({
+            entrada: Number(entry.sum),
+            saida: Number(exit.sum)
+        });
+
+    } catch (error) {
+        return res.status(500).json({ mensagem: "Erro interno do servidor...." });
+    }
+}
+
 
 module.exports = {
     registerTransaction,
     updateTransaction,
     detailTransaction,
     listTransactions,
-    deleteTransaction
+    deleteTransaction,
+    consultExtract
 }
