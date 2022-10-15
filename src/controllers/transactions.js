@@ -142,9 +142,35 @@ const detailTransaction = async (req, res) => {
     }
 }
 
+
+const deleteTransaction = async (req, res) => {
+    const { user } = req;
+    const { id } = req.params;
+
+    try {
+        const transaction = await knex('transacoes').where({usuario_id: user.id, id }).first();
+
+        if (!transaction) {
+            return res.status(404).json({ mensagem: "A transação não existe." });
+        }
+
+        const transactionDeleted = await knex('transacoes').where({ id }).del();
+
+        if (!transactionDeleted) {
+            return res.status(400).json({mensagem: "A transação não foi excuída."})
+        }
+
+        return res.status(204).send();
+        
+    } catch (error) {
+        return res.status(500).json({ mensagem: "Erro interno do servidor." });
+    }
+}
+
 module.exports = {
     registerTransaction,
     updateTransaction,
     detailTransaction,
-    listTransactions
+    listTransactions,
+    deleteTransaction
 }
