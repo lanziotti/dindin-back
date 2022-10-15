@@ -171,8 +171,8 @@ const consultExtract = async (req, res) => {
     const { user } = req;
 
     try {
-        const entry = await knex('transacoes').where({usuario_id: user.id, tipo: 'entrada'}).sum('valor').first();
-        const exit = await knex('transacoes').where({usuario_id: user.id, tipo: 'saida'}).sum('valor').first();
+        const entry = await knex('transacoes').where({ usuario_id: user.id, tipo: 'entrada' }).sum('valor').first();
+        const exit = await knex('transacoes').where({ usuario_id: user.id, tipo: 'saida' }).sum('valor').first();
 
         return res.json({
             entrada: Number(entry.sum),
