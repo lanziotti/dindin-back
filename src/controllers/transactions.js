@@ -73,11 +73,46 @@ const updateTransaction = async (req, res) => {
         });
 
         if (!updatedTransaction) {
-            return res.status(400).json({mensagem: "A transação não foi atualizada."});
+            return res.status(400).json({ mensagem: "A transação não foi atualizada." });
         }
 
         return res.status(204).send();
-        
+
+    } catch (error) {
+        return res.status(500).json({ mensagem: "Erro interno do servidor." });
+    }
+}
+
+
+const detailTransaction = async (req, res) => {
+    const { user } = req;
+    const { id } = req.params;
+
+    try {
+        const transaction = await knex('transacoes').where({ usuario_id: user.id, id }).first();
+
+        if (!transaction) {
+            return res.status(404).json({ mensagem: "A transação não existe." });
+        }
+
+        const { tipo, descricao, valor, data, usuario_id, categoria_id } = transaction;
+
+        const categorie = await knex('categorias').where({ id: categoria_id }).first();
+
+
+        const objectTransaction = {
+            id: Number(id),
+            tipo,
+            descricao,
+            valor: Number(valor),
+            data,
+            usuario_id,
+            categoria_id,
+            categoria_nome: categorie.descricao
+        }
+
+        return res.json(objectTransaction);
+
     } catch (error) {
         return res.status(500).json({ mensagem: "Erro interno do servidor." });
     }
@@ -85,5 +120,6 @@ const updateTransaction = async (req, res) => {
 
 module.exports = {
     registerTransaction,
-    updateTransaction
+    updateTransaction,
+    detailTransaction
 }
