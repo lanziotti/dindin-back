@@ -38,6 +38,30 @@ const registerTransaction = async (req, res) => {
 }
 
 
+const listTransactions = async (req, res) => {
+    const { user } = req;
+
+    try {
+        const transactions = await knex('transacoes')
+            .where({ usuario_id: user.id })
+            .leftJoin('categorias', 'transacoes.categoria_id', 'categorias.id')
+            .select('transacoes.*', 'categorias.descricao as categoria_nome')
+            ;
+
+
+        for (const transaction of transactions) {
+            transaction.valor = Number(transaction.valor);
+        }
+
+        return res.json(transactions);
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ mensagem: "Erro interno do servidor." });
+    }
+}
+
+
 const updateTransaction = async (req, res) => {
     const { user } = req;
     const { id } = req.params;
@@ -121,5 +145,6 @@ const detailTransaction = async (req, res) => {
 module.exports = {
     registerTransaction,
     updateTransaction,
-    detailTransaction
+    detailTransaction,
+    listTransactions
 }
