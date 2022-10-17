@@ -4,14 +4,6 @@ const registerTransaction = async (req, res) => {
     const { user } = req;
     const { descricao, valor, data, categoria_id, tipo } = req.body;
 
-    if (!descricao || !valor || !data || !categoria_id || !tipo) {
-        return res.status(400).json({ mensagem: "Todos os campos são obrigatórios." });
-    }
-
-    if (tipo !== 'entrada' && tipo !== 'saida') {
-        return res.status(400).json({ mensagem: 'O tipo precisa ser: "entrada" ou "saida"' });
-    }
-
     try {
         const categorie = await knex('categorias').where({ id: categoria_id }).first();
 
@@ -65,14 +57,6 @@ const updateTransaction = async (req, res) => {
     const { user } = req;
     const { id } = req.params;
     const { descricao, valor, data, categoria_id, tipo } = req.body;
-
-    if (!descricao || !valor || !data || !categoria_id || !tipo) {
-        return res.status(400).json({ mensagem: "Todos os campos são obrigatórios." });
-    }
-
-    if (tipo !== 'entrada' && tipo !== 'saida') {
-        return res.status(400).json({ mensagem: 'O tipo precisa ser "entrada" ou "saida"' });
-    }
 
     try {
         const transaction = await knex('transacoes').where({ usuario_id: user.id, id }).first();

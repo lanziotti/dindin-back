@@ -4,10 +4,6 @@ const bcrypt = require('bcrypt');
 const userRegistration = async (req, res) => {
     const { nome, email, senha } = req.body;
 
-    if (!nome || !email || !senha) {
-        return res.status(400).json({ mensagem: "Todos os campos são obrigatórios!" });
-    }
-
     try {
         const user = await knex('usuarios').where({ email }).first();
 
@@ -43,11 +39,7 @@ const getUserProfile = async (req, res) => {
 const updateUserProfile = async (req, res) => {
     const { user } = req;
     const { nome, email, senha } = req.body;
-
-    if (!nome || !email || !senha) {
-        return res.status(400).json({ mensagem: "Todos os campos sãp obrigatórios" });
-    }
-
+    
     try {
         const emailExists = await knex('usuarios').where({ email }).first();
 
