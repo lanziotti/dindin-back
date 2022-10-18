@@ -348,6 +348,7 @@ Output:
 
 
 ## Links
+- Deploy Heroku: https://api-dindin-back.herokuapp.com
 - Repositório: https://github.com/lanziotti/dindin-back
 
 ## Contatos
