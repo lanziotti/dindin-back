@@ -343,3 +343,19 @@ Output:
  "saida": 15800
 }
 ```
+
+
+
+
+## Links
+- Repositório: https://github.com/lanziotti/dindin-back
+
+## Contatos
+- Email: rodrigolanziotti@yahoo.com.br
+- LinkedIn: https://www.linkedin.com/in/rodrigo-lanziotti-16a64966/
+
+## Versão
+1.0.0
+
+## Autor
+Rodrigo Lanziotti de Freitas
