@@ -359,4 +359,10 @@ Output:
 1.0.0
 
 ## Autor
-Rodrigo Lanziotti de Freitas
+**Rodrigo Lanziotti de Freitas**
+
+#
+
+Obrigado por visitar meu repositório...😎
+
+...fique a vontade para entrar em contato quando quiser! 😉
