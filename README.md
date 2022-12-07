@@ -348,7 +348,7 @@ Output:
 
 
 ## Links
-- Deploy Heroku: https://api-dindin-back.herokuapp.com
+- Deploy AWS: http://dindin-env.eba-mb9bequv.sa-east-1.elasticbeanstalk.com/
 - Repositório: https://github.com/lanziotti/dindin-back
 
 ## Contatos
